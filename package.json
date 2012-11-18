@@ -1,0 +1,68 @@
+{
+  "name": "grunt-eco",
+  "description": "JavaScripts your Embedded CoffeeScript Templates",
+  "version": "0.0.1",
+  "homepage": "https://github.com/gr2m/grunt-eco",
+  "author": {
+    "name": "Gregor Martynus",
+    "email": "gregor@martynus.net"
+  },
+  "contributors": [
+    {
+      "name": "Aaron D. Valade",
+      "url": "https://github.com/avalade"
+    },{
+      "name": "Derek Lindahl",
+      "url": "https://github.com/dlindahl"
+    },{
+      "name": "Tim Oxley",
+      "url": "https://github.com/timoxley"
+    },{
+      "name": "Pete Bacon Darwin",
+      "url": "https://github.com/petebacondarwin"
+    },{
+      "name": "Kevin Rockwood",
+      "url": "https://github.com/rockwood"
+    },{
+      "name": "Ken 'Elf' Matheiu Sternberg",
+      "url": "https://github.com/elfsternberg"
+    },{
+      "name": "siriux",
+      "url": "https://github.com/siriux"
+    },{
+      "name": "Enleur",
+      "url": "https://github.com/Enleur"
+    },{
+      "name": "brewster1134",
+      "url": "https://github.com/brewster1134"
+    }
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/gr2m/grunt-eco.git"
+  },
+  "bugs": {
+    "url": "https://github.com/gr2m/grunt-eco/issues"
+  },
+  "licenses": [
+    {
+      "type": "MIT",
+      "url": "https://github.com/gr2m/grunt-eco/blob/master/LICENSE-MIT"
+    }
+  ],
+  "main": "grunt.js",
+  "engines": {
+    "node": "*"
+  },
+  "dependencies": {
+    "grunt": "~0.3.8",
+    "eco": "~1.0.3"
+  },
+  "devDependencies": {
+    "grunt": "~0.3.8",
+    "eco": "~1.0.3"
+  },
+  "keywords": [
+    "gruntplugin"
+  ]
+}
