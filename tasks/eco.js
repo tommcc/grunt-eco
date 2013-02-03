@@ -40,7 +40,8 @@ module.exports = function(grunt) {
     var eco = require('eco'),
         js = '';
 
-    options = options || {};
+    // options = options || {};
+    options = grunt.config('eco.app');
     extension = typeof extension === "undefined" ? '.js' : extension;
 
     if( destPath && options.preserve_dirs ){
@@ -53,7 +54,8 @@ module.exports = function(grunt) {
       destPath = path.dirname(src);
     }
 
-    var dest = path.join(destPath, path.basename(src, '.eco') + extension);
+    var basename = path.basename(src, '.eco'),
+        dest = path.join(destPath, basename + extension);
 
     // De-dup dest if we have .js.js - see issue #16
     if (dest.match(/\.js\.js/)) {
@@ -70,7 +72,7 @@ module.exports = function(grunt) {
     }
 
     try {
-      js = eco.compile(grunt.file.read(src), options);
+      js = eco.compile(dirname.substr(1) + '/' + basename, grunt.file.read(src), options);
       grunt.file.write(dest, js);
       return true;
     } catch (e) {
