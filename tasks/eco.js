@@ -8,6 +8,7 @@
 
 module.exports = function(grunt) {
   var path = require('path');
+  
 
   // Please see the grunt documentation for more information regarding task and
   // helper creation: https://github.com/cowboy/grunt/blob/master/docs/toc.md
@@ -17,45 +18,43 @@ module.exports = function(grunt) {
   // ==========================================================================
 
   grunt.registerMultiTask('eco', 'Compile Embedded CoffeeScript Templates', function() {
-    var dest = this.file.dest,
-        options = this.data.options,
-        extension = this.data.extension;
+    this.requiresConfig('eco');
 
-    grunt.file.expandFiles(this.file.src).forEach(function(filepath) {
-      grunt.helper('eco', filepath, dest, grunt.utils._.clone(options), extension);
-    });
+    var helpers = require('grunt-lib-contrib').init(grunt);
 
-    if (grunt.task.current.errorCount) {
-      return false;
-    } else {
-      return true;
-    }
-  });
 
-  // ==========================================================================
-  // HELPERS
-  // ==========================================================================
+    var basePath;
+    var srcFiles;
+    var newFileDest;
 
-  grunt.registerHelper('eco', function(src, destPath, options, extension) {
+    this.files.forEach(function (file) {
+      file.dest = path.normalize(file.dest);
+      srcFiles = grunt.file.expand(file.src);
+
+      basePath = helpers.findBasePath(srcFiles, file.basePath);
+
+      console.log("basePath")
+      console.log(basePath)
+
+      srcFiles.forEach(function (srcFile) {
+        newFileDest = helpers.buildIndividualDest(file.dest, srcFile, basePath);
+        compile(srcFile, newFileDest, basePath);
+      })
+    })
+  })
+
+  var compile = function(src, destPath, basePath) {
     var eco = require('eco'),
         js = '';
 
-    // options = options || {};
+
     options = grunt.config('eco.app');
     extension = typeof extension === "undefined" ? '.js' : extension;
 
-    if( destPath && options.preserve_dirs ){
-      var dirname = path.dirname(src);
-      if ( options.base_path ) {
-        dirname = dirname.replace(new RegExp('^'+options.base_path), '');
-      }
-      destPath = path.join(destPath, dirname);
-    } else if( !destPath ){
-      destPath = path.dirname(src);
-    }
-
+    var dirname = path.dirname(src);
     var basename = path.basename(src, '.eco'),
-        dest = path.join(destPath, basename + extension);
+        dest = destPath + extension;
+    var JSTpath
 
     // De-dup dest if we have .js.js - see issue #16
     if (dest.match(/\.js\.js/)) {
@@ -72,13 +71,23 @@ module.exports = function(grunt) {
     }
 
     try {
-      js = eco.compile(dirname.substr(1) + '/' + basename, grunt.file.read(src), options);
+      js = eco.compile(basename, grunt.file.read(src), options);
+
+      JSTpath = dirname + '/' + basename
+      JSTpath = JSTpath.replace(basePath, '').substr(1)
+      JSTpath = JSTpath.replace(/views\//, '')
+
+      console.log('compiling %s', JSTpath)
+
+      js = js.replace(/module\.exports/, "if (! window.JST) { window.JST = {}}; window.JST['"+JSTpath+"']")
+
       grunt.file.write(dest, js);
       return true;
     } catch (e) {
       grunt.log.error("Error in " + src + ":\n" + e);
       return false;
     }
-  });
+  };
 
-};
+
+}
