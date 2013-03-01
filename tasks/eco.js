@@ -8,7 +8,7 @@
 
 module.exports = function(grunt) {
   var path = require('path');
-  
+
 
   // Please see the grunt documentation for more information regarding task and
   // helper creation: https://github.com/cowboy/grunt/blob/master/docs/toc.md
@@ -71,14 +71,13 @@ module.exports = function(grunt) {
     }
 
     try {
-      js = eco.compile(basename, grunt.file.read(src), options);
+      js = eco.compile(grunt.file.read(src));
 
       JSTpath = dirname + '/' + basename
       JSTpath = JSTpath.replace(basePath, '').substr(1)
       JSTpath = JSTpath.replace(/views\//, '')
 
       console.log('compiling %s', JSTpath)
-
       js = js.replace(/module\.exports/, "if (! window.JST) { window.JST = {}}; window.JST['"+JSTpath+"']")
 
       grunt.file.write(dest, js);
