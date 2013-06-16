@@ -7,86 +7,85 @@
  */
 
 module.exports = function(grunt) {
-  var path = require('path');
+  'use strict';
 
+  var path = require('path'),
+      eco = require('eco');
 
-  // Please see the grunt documentation for more information regarding task and
-  // helper creation: https://github.com/cowboy/grunt/blob/master/docs/toc.md
+  var compile = function(src, options) {
+    var input = grunt.file.read(src),
+        output = '',
+        JSTpath = path.dirname(src) + '/' + path.basename(src, '.eco');
 
-  // ==========================================================================
-  // TASKS
-  // ==========================================================================
+    if (input.length < 1) {
+      if (options.emptyWarning) {
+        grunt.log.warn('Template ' + src.cyan + ' not compiled because file is empty.');
+      }
 
-  grunt.registerMultiTask('eco', 'Compile Embedded CoffeeScript Templates', function() {
-    this.requiresConfig('eco');
-
-    var helpers = require('grunt-lib-contrib').init(grunt);
-
-
-    var basePath;
-    var srcFiles;
-    var newFileDest;
-
-    this.files.forEach(function (file) {
-      file.dest = path.normalize(file.dest);
-      srcFiles = grunt.file.expand(file.src);
-
-      basePath = helpers.findBasePath(srcFiles, file.basePath);
-
-      console.log("basePath")
-      console.log(basePath)
-
-      srcFiles.forEach(function (srcFile) {
-        newFileDest = helpers.buildIndividualDest(file.dest, srcFile, basePath);
-        compile(srcFile, newFileDest, basePath);
-      })
-    })
-  })
-
-  var compile = function(src, destPath, basePath) {
-    var eco = require('eco'),
-        js = '';
-
-
-    options = grunt.config('eco.app');
-    extension = typeof extension === "undefined" ? '.js' : extension;
-
-    var dirname = path.dirname(src);
-    var basename = path.basename(src, '.eco'),
-        dest = destPath + extension;
-    var JSTpath
-
-    // De-dup dest if we have .js.js - see issue #16
-    if (dest.match(/\.js\.js/)) {
-      dest = dest.replace(/\.js\.js/, ".js");
-    }
-
-    if (path.extname(src) === '.js') {
-      grunt.file.copy(src, dest);
-      return true;
-    }
-
-    if( options.bare !== false ) {
-      options.bare = true;
+      return false;
     }
 
     try {
-      js = eco.compile(grunt.file.read(src));
-
-      JSTpath = dirname + '/' + basename
-      JSTpath = JSTpath.replace(basePath, '').substr(1)
-      JSTpath = JSTpath.replace(/views\//, '')
-
-      console.log('compiling %s', JSTpath)
-      js = js.replace(/module\.exports/, "if (! window.JST) { window.JST = {}}; window.JST['"+JSTpath+"']")
-
-      grunt.file.write(dest, js);
-      return true;
+      output = eco.compile(grunt.file.read(src)).replace(/module\.exports/, '');
     } catch (e) {
       grunt.log.error("Error in " + src + ":\n" + e);
       return false;
     }
+
+    if (options.amd) {
+      output = 'define(function(){\n' +
+      '  var template' + output + '\n' +
+      '  return template;\n' +
+      '});\n';
+    } else {
+      output = 'window.JST["' + JSTpath + '"]' + output + '\n';
+
+      if (options.jstGlobalCheck) {
+        output = "if (!window.JST) {\n  window.JST = {};\n}\n" + output;
+      }
+    }
+
+    return output;
   };
 
 
-}
+  grunt.registerMultiTask('eco', 'Compile Embedded CoffeeScript Templates', function() {
+    var options = this.options({
+      amd: false,
+      emptyWarning: true,
+      jstGlobalCheck: true
+    });
+
+    if (options.basePath) {
+      grunt.fail.warn('basePath is no longer supported. please refer to README.');
+    }
+
+    this.files.forEach(function(file) {
+      var destFile = path.normalize(file.dest);
+      var srcFiles = file.src.filter(function(filepath) {
+        if (!grunt.file.exists(filepath)) {
+          grunt.log.warn('Source file "' + filepath + '" not found.');
+          return false;
+        } else {
+          return true;
+        }
+      });
+
+      var compiled = [];
+      srcFiles.forEach(function(src) {
+        var res = compile(src, options);
+
+        if (res) {
+          compiled.push(res);
+        }
+      });
+
+      if (compiled.length) {
+        grunt.file.write(destFile, compiled.join(grunt.util.normalizelf(grunt.util.linefeed)));
+        grunt.log.writeln('File ' + destFile.cyan + ' created.');
+      }
+    });
+
+  });
+
+};
