@@ -79,6 +79,20 @@ exports.eco = {
     test.done();
   },
 
+  basePathTest: function(test) {
+    'use strict';
+
+    test.expect(1);
+
+    assertFileEquality(test,
+      'tmp/basePathTest/all.js',
+      'tests/expected/basePathTest/all.js',
+      'Should compile all templates into one file');
+
+    test.done();
+  },
+
+
   amdTest: function(test) {
     'use strict';
 

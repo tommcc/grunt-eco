@@ -51,6 +51,14 @@ module.exports = function(grunt) {
         }]
       },
 
+      basePathTest: {
+        src: ['tests/fixtures/**/*.eco'],
+        dest: 'tmp/basePathTest/all.js',
+        options: {
+          basePath: 'tests/fixtures'
+        }
+      },
+
       amdTest: {
         options: {
           amd: true

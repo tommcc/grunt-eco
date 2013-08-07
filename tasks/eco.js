@@ -17,6 +17,11 @@ module.exports = function(grunt) {
         output = '',
         JSTpath = path.dirname(src) + '/' + path.basename(src, '.eco');
 
+    if (options.basePath) {
+      var re = new RegExp(options.basePath + '\/?');  // match basePath + optional path separator
+      JSTpath = JSTpath.replace(re, '');
+    }
+
     if (input.length < 1) {
       if (options.emptyWarning) {
         grunt.log.warn('Template ' + src.cyan + ' not compiled because file is empty.');
@@ -31,6 +36,7 @@ module.exports = function(grunt) {
       grunt.log.error("Error in " + src + ":\n" + e);
       return false;
     }
+
 
     if (options.amd) {
       output = 'define(function(){\n' +
@@ -52,13 +58,10 @@ module.exports = function(grunt) {
   grunt.registerMultiTask('eco', 'Compile Embedded CoffeeScript Templates', function() {
     var options = this.options({
       amd: false,
+      basePath: '',
       emptyWarning: true,
       jstGlobalCheck: true
     });
-
-    if (options.basePath) {
-      grunt.fail.warn('basePath is no longer supported. please refer to README.');
-    }
 
     this.files.forEach(function(file) {
       var destFile = path.normalize(file.dest);
