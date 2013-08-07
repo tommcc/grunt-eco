@@ -34,6 +34,12 @@ Default: `false`
 
 Defines if compiled function will be wrapped in AMD `define` function.
 
+#### basePath
+Type: `String`
+Default: `empty`
+
+Defines substing which gets removed from JSTpath of output template.
+
 ### emptyWarning
 
 Type: `Boolean`
