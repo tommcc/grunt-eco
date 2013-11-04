@@ -39,16 +39,21 @@ module.exports = function(grunt) {
 
 
     if (options.amd) {
-      output = 'define(function(){\n' +
+      return 'define(function(){\n' +
       '  var template' + output + '\n' +
       '  return template;\n' +
       '});\n';
-    } else {
-      output = 'window.JST["' + JSTpath + '"]' + output + '\n';
+    }
 
-      if (options.jstGlobalCheck) {
-        output = "if (!window.JST) {\n  window.JST = {};\n}\n" + output;
-      }
+    if (options.commonJS) {
+      return 'module.exports '+output+'\n';
+    }
+
+
+    output = 'window.JST["' + JSTpath + '"]' + output + '\n';
+
+    if (options.jstGlobalCheck) {
+      output = "if (!window.JST) {\n  window.JST = {};\n}\n" + output;
     }
 
     return output;
