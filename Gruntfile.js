@@ -51,11 +51,21 @@ module.exports = function(grunt) {
         }]
       },
 
-      basePathTest: {
+      basePathStringTest: {
         src: ['tests/fixtures/**/*.eco'],
-        dest: 'tmp/basePathTest/all.js',
+        dest: 'tmp/basePathStringTest/all.js',
         options: {
           basePath: 'tests/fixtures'
+        }
+      },
+
+      basePathFunctionTest: {
+        src: ['tests/fixtures/**/*.eco'],
+        dest: 'tmp/basePathFunctionTest/all.js',
+        options: {
+          basePath: function(jstPath){
+            return jstPath.replace(/(^tests\/fixtures\/|-example$)/g, '');
+          }
         }
       },
 

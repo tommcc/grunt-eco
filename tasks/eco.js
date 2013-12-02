@@ -18,8 +18,12 @@ module.exports = function(grunt) {
         JSTpath = path.dirname(src) + '/' + path.basename(src, '.eco');
 
     if (options.basePath) {
-      var re = new RegExp(options.basePath + '\/?');  // match basePath + optional path separator
-      JSTpath = JSTpath.replace(re, '');
+      if(typeof(options.basePath) === 'string') {
+        var re = new RegExp(options.basePath + '\/?');  // match basePath + optional path separator
+        JSTpath = JSTpath.replace(re, '');
+      } if(typeof(options.basePath) === 'function') {
+        JSTpath = options.basePath(JSTpath);
+      }
     }
 
     if (input.length < 1) {

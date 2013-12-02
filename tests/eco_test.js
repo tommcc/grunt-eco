@@ -79,14 +79,27 @@ exports.eco = {
     test.done();
   },
 
-  basePathTest: function(test) {
+  basePathStringTest: function(test) {
     'use strict';
 
     test.expect(1);
 
     assertFileEquality(test,
-      'tmp/basePathTest/all.js',
-      'tests/expected/basePathTest/all.js',
+      'tmp/basePathStringTest/all.js',
+      'tests/expected/basePathStringTest/all.js',
+      'Should compile all templates into one file');
+
+    test.done();
+  },
+
+  basePathFunctionTest: function(test) {
+    'use strict';
+
+    test.expect(1);
+
+    assertFileEquality(test,
+      'tmp/basePathFunctionTest/all.js',
+      'tests/expected/basePathFunctionTest/all.js',
       'Should compile all templates into one file');
 
     test.done();
