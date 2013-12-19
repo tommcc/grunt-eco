@@ -84,6 +84,8 @@ module.exports = function(grunt) {
 
         if (res) {
           compiled.push(res);
+        } else {
+          grunt.fail.warn('eco failed to compile.');
         }
       });
 
