@@ -38,6 +38,7 @@ module.exports = function(grunt) {
       output = eco.compile(grunt.file.read(src)).replace(/module\.exports/, '');
     } catch (e) {
       grunt.log.error("Error in " + src + ":\n" + e);
+      grunt.fail.warn("Eco failed to compile " + src + ".");
       return false;
     }
 
