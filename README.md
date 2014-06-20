@@ -129,7 +129,7 @@ Create new GIT branch (`git checkout -b my_feature`) when sending pull request.
 
 ## Release History
 
-* `Jun 10, 2014    v0.1.2` - Bubble up task failure
+* `Jun 20, 2014    v0.1.2` - Bubble up task failure
 * `Jun 16, 2013    v0.1.0` - Refactoring, tests, AMD support
 * `Mar 04, 2013    v0.0.2` - Grunt 0.4 compatibility
 * `Nov 18, 2012    v0.0.1` - Initial commit
