@@ -4,7 +4,7 @@ Compiles [Embedded CoffeeScript templates](https://github.com/sstephenson/eco) (
 
 ## Getting Started
 
-This plugin requires Grunt `~0.4`
+This plugin requires Grunt `>=0.4.0`
 
 If you haven't used [Grunt](http://gruntjs.com/) before, be sure to check out the [Getting Started](http://gruntjs.com/getting-started) guide, as it explains how to create a [Gruntfile](http://gruntjs.com/sample-gruntfile) as well as install and use Grunt plugins. Once you're familiar with that process, you may install this plugin with this command:
 
@@ -18,7 +18,7 @@ Once the plugin has been installed, it may be enabled inside your `Gruntfile.js`
 grunt.loadNpmTasks('grunt-eco');
 ```
 
-*This plugin was designed to work with Grunt 0.4.x. If you're still using grunt v0.3.x it's strongly recommended that [you upgrade](http://gruntjs.com/upgrading-from-0.3-to-0.4), but in case you can't please use [v0.3.1](https://github.com/gruntjs/grunt-contrib-stylus/tree/grunt-0.3-stable).*
+*This plugin was designed to work with Grunt 0.4.x and Grunt 1.x. If you're still using grunt v0.3.x it's strongly recommended that [you upgrade](http://gruntjs.com/upgrading-from-0.3-to-0.4), but in case you can't please use [v0.3.1](https://github.com/gruntjs/grunt-contrib-stylus/tree/grunt-0.3-stable).*
 
 ## eco task
 
@@ -129,6 +129,7 @@ Create new GIT branch (`git checkout -b my_feature`) when sending pull request.
 
 ## Release History
 
+* `Jun 06, 2016    v0.1.3` - Grunt 1.0 compatibility
 * `Jun 20, 2014    v0.1.2` - Bubble up task failure
 * `Jun 16, 2013    v0.1.0` - Refactoring, tests, AMD support
 * `Mar 04, 2013    v0.0.2` - Grunt 0.4 compatibility
