@@ -31,6 +31,9 @@ module.exports = function(grunt) {
 
     eco: {
       filesTest: {
+        options: {
+          emptyWarning: false,
+        },
         files: {
           'tmp/filesTest/all.js': ['tests/fixtures/**/*.eco'],
           'tmp/filesTest/flatOnly.js': 'tests/fixtures/*.eco'
@@ -38,11 +41,17 @@ module.exports = function(grunt) {
       },
 
       srcDestTest: {
+        options: {
+          emptyWarning: false,
+        },
         src: ['tests/fixtures/**/*.eco'],
         dest: 'tmp/srcDestTest/all.js'
       },
 
       expandTest: {
+        options: {
+          emptyWarning: false,
+        },
         files: [{
           expand: true,
           src: 'tests/fixtures/**/*.eco',
@@ -55,7 +64,8 @@ module.exports = function(grunt) {
         src: ['tests/fixtures/**/*.eco'],
         dest: 'tmp/basePathStringTest/all.js',
         options: {
-          basePath: 'tests/fixtures'
+          basePath: 'tests/fixtures',
+          emptyWarning: false,
         }
       },
 
@@ -65,13 +75,15 @@ module.exports = function(grunt) {
         options: {
           basePath: function(jstPath){
             return jstPath.replace(/(^tests\/fixtures\/|-example$)/g, '');
-          }
+          },
+          emptyWarning: false,
         }
       },
 
       amdTest: {
         options: {
-          amd: true
+          amd: true,
+          emptyWarning: false,
         },
         files: [{
           expand: true,
@@ -83,6 +95,7 @@ module.exports = function(grunt) {
 
       noJstGlobalCheckTest: {
         options: {
+          emptyWarning: false,
           jstGlobalCheck: false
         },
         files: {

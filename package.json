@@ -19,7 +19,6 @@
   "bugs": {
     "url": "https://github.com/gr2m/grunt-eco/issues"
   },
-
   "author": {
     "name": "Gregor Martynus",
     "email": "gregor@martynus.net"
@@ -66,13 +65,12 @@
       "url": "https://github.com/srigi"
     }
   ],
-
   "main": "Gruntfile.js",
   "engines": {
     "node": ">=0.8"
   },
   "dependencies": {
-    "eco": "~1.0"
+    "eco": "1.0.3"
   },
   "devDependencies": {
     "grunt": ">=0.4.0",

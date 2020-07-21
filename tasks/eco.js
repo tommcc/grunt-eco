@@ -29,9 +29,9 @@ module.exports = function(grunt) {
     if (input.length < 1) {
       if (options.emptyWarning) {
         grunt.log.warn('Template ' + src.cyan + ' not compiled because file is empty.');
+        return false;
       }
-
-      return false;
+      return true;
     }
 
     try {
