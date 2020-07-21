@@ -63,7 +63,7 @@ window.JST["advanced"] = function(__obj) {
   })());
 };
 
-true
+
 if (!window.JST) {
   window.JST = {};
 }

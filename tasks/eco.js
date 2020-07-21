@@ -31,7 +31,7 @@ module.exports = function(grunt) {
         grunt.log.warn('Template ' + src.cyan + ' not compiled because file is empty.');
         return false;
       }
-      return true;
+      return output;
     }
 
     try {
@@ -83,7 +83,7 @@ module.exports = function(grunt) {
       srcFiles.forEach(function(src) {
         var res = compile(src, options);
 
-        if (res) {
+        if (typeof res === 'string') {
           compiled.push(res);
         } else {
           grunt.fail.warn('eco failed to compile.');

@@ -63,7 +63,7 @@ window.JST["tests/fixtures/advanced-example"] = function(__obj) {
   })());
 };
 
-true
+
 if (!window.JST) {
   window.JST = {};
 }

@@ -60,7 +60,7 @@ window.JST["tests/fixtures/advanced-example"] = function(__obj) {
   })());
 };
 
-true
+
 window.JST["tests/fixtures/example"] = function(__obj) {
   var _safe = function(value) {
     if (typeof value === 'undefined' && value == null)
