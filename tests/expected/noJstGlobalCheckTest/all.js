@@ -19,13 +19,13 @@ window.JST["tests/fixtures/advanced-example"] = function(__obj) {
       return _safe(result);
     };
     (function() {
-      var project, _i, _len, _ref;
+      var i, len, project, ref;
     
       if (this.projects.length) {
         _print(_safe('\n  '));
-        _ref = this.projects;
-        for (_i = 0, _len = _ref.length; _i < _len; _i++) {
-          project = _ref[_i];
+        ref = this.projects;
+        for (i = 0, len = ref.length; i < len; i++) {
+          project = ref[i];
           _print(_safe('\n    <a href="'));
           _print(project.url);
           _print(_safe('">'));
@@ -59,6 +59,7 @@ window.JST["tests/fixtures/advanced-example"] = function(__obj) {
     return obj;
   })());
 };
+
 
 window.JST["tests/fixtures/example"] = function(__obj) {
   var _safe = function(value) {
